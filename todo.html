@@ -59,15 +59,14 @@
                             todoLabel.querySelector("span").textContent = newInput;
                             saveTodos();
                         }
-                        todoInput.checked = !todoInput.checked; 
+                        todoInput.checked = !todoInput.checked;
                         saveTodos();
                     };
 
                     todoInput.onchange = saveTodos;
-
                 }
 
-                function handleSubmit(e){
+                window.handleSubmit = (e) => {
                     if (e.key == "Enter") {
                         const input = e.target.value;
                         e.target.value = "";
@@ -93,7 +92,7 @@
                     <input
                         class="absolute top-0 left-0 right-0 w-[95%] rounded-md p-2 mx-auto border mt-2 h-[6vh]"
                         placeholder="add todo"
-                        onkeydown="return handleSubmit(event)"
+                        onkeydown=" return handleSubmit(event)"
                     />
                     <div class="overflow-auto todos mt-[8vh] max-h-[60vh] p-8 w-full grid"></div>
                 </div>
