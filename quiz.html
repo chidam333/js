@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>quiz</title>
+        <link href="./output.css" rel="stylesheet" />
+        <script async>
+            const questions = [];
+            let correctAnswers = 0;
+            let currentQuestionIndex = 0;
+
+            (async () => {
+                const response = await fetch("./static/questions.json");
+                const data = await response.json();
+                questions.push(...data.questions);
+                const curQuestion = questions[currentQuestionIndex];
+                const questionText = document.querySelector(`.question-text`);
+                questionText.innerHTML = curQuestion.question;
+                for (let i = 0; i < curQuestion.options.length; i++) {
+                    const optionText = document.querySelector(`.option-text${i + 1}`);
+                    optionText.innerHTML = curQuestion.options[i];
+                }
+                currentQuestionIndex += 1;
+            })();
+
+            function quizEvaluate() {
+                const selectedOption = document.querySelector('input[name="quizOptions"]:checked');
+                if (!selectedOption) {
+                    alert("Please select an option before submitting.");
+                    return;
+                }
+                const selectedValue = parseInt(selectedOption.value, 10);
+                const correctAnswer = questions[currentQuestionIndex - 1].answer;
+                const correctValue = questions[currentQuestionIndex - 1].options.indexOf(correctAnswer);
+                if (selectedValue === correctValue) {
+                    correctAnswers += 1;
+                }
+                if (currentQuestionIndex < questions.length) {
+                    const curQuestion = questions[currentQuestionIndex];
+                    const questionText = document.querySelector(`.question-text`);
+                    questionText.innerHTML = curQuestion.question;
+                    for (let i = 0; i < curQuestion.options.length; i++) {
+                        const optionText = document.querySelector(`.option-text${i + 1}`);
+                        optionText.innerHTML = curQuestion.options[i];
+                    }
+                    currentQuestionIndex += 1;
+                } else {
+                    alert(`Quiz completed! You got ${correctAnswers} out of ${questions.length} correct.`);
+                }
+                console.log("evaluating...");
+            }
+        </script>
+    </head>
+    <body class="bg-stone-200 text-amber-800 w-[100vw] h-[100vh] relative overflow-hidden">
+        <header class="w-[100vw] text-center text-xl md:text-4xl h-[10vh] grid place-items-center">
+            <h1 class="font-mono my-auto">
+                chidam's
+                <span class="lame bg-yellow-200 px-2 italic stroke-indigo-50 text-black font-extrabold">quiz</span>
+            </h1>
+        </header>
+        <main class="overflow-auto h-[80vh] grid place-items-center">
+            <div class="question w-[90vw] lg:w-[40vw]">
+                <h2 class="text-2xl font-bold mb-4">Quiz Questions</h2>
+                <div class="question-text text-black font-extrabold text-2xl mb-2">Loading...</div>
+                <div class="my-6 grid gap-4 w-full">
+                    <div class="flex w-full items-center">
+                        <input type="radio" id="option1" name="quizOptions" value="0" class="mr-2" />
+                        <label for="option1" class="option-text1">Loading...</label>
+                    </div>
+                    <div class="flex w-full items-center">
+                        <input type="radio" id="option2" name="quizOptions" value="1" class="mr-2" />
+                        <label for="option2" class="option-text2">Loading...</label>
+                    </div>
+                    <div class="flex w-full items-center">
+                        <input type="radio" id="option3" name="quizOptions" value="2" class="mr-2" />
+                        <label for="option3" class="option-text3">Loading...</label>
+                    </div>
+                </div>
+                <button
+                    class="bg-amber-200 border font-bold px-4 py-2 rounded-md cursor-pointer"
+                    onclick=" quizEvaluate()"
+                >
+                    Submit Answers
+                </button>
+            </div>
+        </main>
+        <footer class="absolute bottom-0 w-full text-center py-2 bg-black text-amber-200">
+            <p class="italic">&copy; All right's <span class="line-through">reserved</span> unreserverd</p>
+        </footer>
+    </body>
+</html>

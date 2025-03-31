@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>weather</title>
+        <link href="./output.css" rel="stylesheet" />
+        <script async>
+            let data;
+            navigator.geolocation.getCurrentPosition(
+                async (position) => {
+                    const { latitude, longitude } = position.coords;
+                    const url = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true`;
+                    try {
+                        const response = await fetch(url);
+                        data = await response.json();
+                        document.querySelector(".temp").innerHTML = data["current_weather"]["temperature"];
+                        document.querySelector(".wind").innerHTML = data["current_weather"]["windspeed"];
+                        document.querySelector(".dir").innerHTML = data["current_weather"]["winddirection"];
+                        console.log({ data });
+                    } catch (error) {
+                        console.error("Error fetching weather data:", error);
+                    }
+                },
+                async (error) => {
+                    console.error("Location unavailable; using fallback coordinates.");
+                    const latitude = 13;
+                    const longitude = 80;
+                    const url = `https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current_weather=true`;
+                    try {
+                        const response = await fetch(url);
+                        data = await response.json();
+                        document.querySelector(".temp").innerHTML = data["current_weather"]["temperature"];
+                        document.querySelector(".wind").innerHTML = data["current_weather"]["windspeed"];
+                        document.querySelector(".dir").innerHTML = data["current_weather"]["winddirection"];
+                        console.log({ data });
+                    } catch (error) {
+                        console.error("Error fetching weather data:", error);
+                    }
+                }
+            );
+        </script>
+    </head>
+    <body class="bg-black text-amber-500 w-[100vw] h-[100vh] relative overflow-hidden">
+        <header class="w-[100vw] text-center text-xl md:text-4xl h-[10vh] grid place-items-center">
+            <h1 class="font-mono my-auto">
+                chidam's
+                <span class="lame bg-yellow-200 px-2 italic stroke-indigo-50 text-black font-extrabold">weather</span>
+                app
+            </h1>
+        </header>
+        <main class="overflow-auto h-[80vh] relative">
+            <div class="absolute bg-black opacity-70 top-0 left-0 w-screen h-[80vh] z-10"></div>
+            <div class="absolute inset-0 grid place-items-center h-[80vh]">
+                <img src="./static/gemini_park.jpeg" alt="park" class="lg:h-[80vh] lg:w-auto w-screen" />
+            </div>
+            <div class="data z-20 absolute w-screen h-[80vh] grid place-items-center">
+                <div class="max-w-xs mx-auto p-6 bg-white/10 backdrop-blur-sm rounded-xl shadow-lg">
+                    <h2 class="text-2xl font-bold mb-4">Current Weather</h2>
+                    <div class="mb-2 flex gap-8 text-amber-200">
+                        <span class="font-semibold">Temp : </span>
+                        <div class="wrap flex gap-2">
+                            <div class="temp">Loading...</div>
+                            C
+                        </div>
+                    </div>
+                    <div class="mb-2 flex gap-8 text-amber-200">
+                        <span class="font-semibold">Wind :</span>
+                        <div class="wrap flex gap-2">
+                            <div class="wind">Loading...</div>
+                            km/h
+                        </div>
+                    </div>
+                    <div class="mb-2 flex gap-8 text-amber-200">
+                        <span class="font-semibold">W.dir :</span>
+                        <div class="wrap flex gap-2">
+                            <div class="dir">Loading...</div>
+                            °
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer class="absolute bottom-0 w-full grid place-items-center py-2 bg-black h-[10vh]">
+            <p class="italic">&copy; All right's <span class="line-through">reserved</span> unreserverd</p>
+        </footer>
+    </body>
+</html>

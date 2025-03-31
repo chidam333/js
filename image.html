@@ -16,7 +16,7 @@
                     overlayImg.setAttribute("height", "400px");
                     overlayImg.setAttribute("width", "400px");
                     overlayImg.setAttribute("alt", "random image");
-                    overlayImg.className = ""; // Ensure full opacity
+                    overlayImg.className = "border-12 border-white";
                     overlay.className =
                         "absolute hidden inset-0 overlay h-screen w-screen transition-opacity duration-200 ease-in-out z-20 grid place-items-center";
                     image.setAttribute("src", `https://picsum.photos/200/200?random=${i}`);
@@ -37,7 +37,7 @@
         </script>
         <style>
             .overlay {
-                background: rgb(0, 0, 0, 0.7);
+                background: rgb(0, 0, 0, 0.8);
             }
         </style>
     </head>

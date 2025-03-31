@@ -1,0 +1,24 @@
+{
+    "questions": [
+        {
+            "question": "How will you resolve async iters in javascript?",
+            "options": ["for await", "for each", "for of"],
+            "answer": "for await"
+        },
+        {
+            "question": "How are labeled statements used in JavaScript?",
+            "options": ["To break out of nested loops", "As a variable declaration", "To create closures"],
+            "answer": "To break out of nested loops"
+        },
+        {
+            "question": "What is a closure in JavaScript?",
+            "options": ["A function that returns another function", "A block of code that runs when an event occurs", "A way to create private variables"],
+            "answer": "A way to create private variables"
+        },
+        {
+            "question": "How do you create a promise in JavaScript?",
+            "options": ["new Promise()", "Promise.create()", "Promise.new()"],
+            "answer": "new Promise()"
+        }
+    ]
+}
