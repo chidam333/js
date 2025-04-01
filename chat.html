@@ -5,6 +5,45 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>chat</title>
         <link href="./output.css" rel="stylesheet" />
+        <script async>
+            let systemTyping = false;
+            function handleSubmit(event) {
+                if (event.key === "Enter") {
+                    // Prevent submission if system is typing
+                    if (systemTyping) { return; }
+                    const input = event.target;
+                    const message = input.value.trim();
+                    if (message) {
+                        const main = document.querySelector("main");
+                        const messageElement = document.createElement("div");
+                        messageElement.className = "message bg-yellow-200 p-2 my-2 rounded-md w-fit ml-auto";
+                        messageElement.textContent = message;
+                        main.appendChild(messageElement);
+                        input.value = ""; // Clear the input field
+                        main.scrollTop = main.scrollHeight; // Scroll to the bottom
+
+                        // Set systemTyping flag to true for 5 seconds before sending a system message
+                        systemTyping = true;
+                        setTimeout(() => {
+                            const systemMessages = [
+                                "Hello, how can I assist you?",
+                                "I'm here to help!",
+                                "What do you need assistance with?",
+                                "Let me check on that...",
+                                "Processing your request now!"
+                            ];
+                            const randomIndex = Math.floor(Math.random() * systemMessages.length);
+                            const sysMessageElement = document.createElement("div");
+                            sysMessageElement.className = "message bg-blue-500 text-white p-2 my-2 rounded-md w-fit mr-auto";
+                            sysMessageElement.textContent = systemMessages[randomIndex];
+                            main.appendChild(sysMessageElement);
+                            main.scrollTop = main.scrollHeight;
+                            systemTyping = false;
+                        }, 5000);
+                    }
+                }
+            }
+        </script>
     </head>
     <body class="bg-stone-200 text-amber-800 w-[100vw] h-[100vh] relative overflow-hidden">
         <header class="w-[100vw] text-center text-xl md:text-4xl h-[10vh] grid place-items-center">
@@ -13,8 +52,14 @@
                 <span class="lame bg-yellow-200 px-2 italic stroke-indigo-50 text-black font-extrabold">chat</span>
             </h1>
         </header>
-        <main class="overflow-auto h-[80vh]"></main>
-        <footer class="absolute bottom-0 w-full text-center py-2 bg-black text-yellow-200">
+        <main class="overflow-y-auto h-[83vh] px-8 lg:px-64 w-screen relative"></main>
+        <input
+            onkeydown="handleSubmit(event)"
+            type="text"
+            class="fixed rounded-lg top-[80vh] h-[7vh] border bg-opacity-50 backdrop-blur-md text-black px-2 left-8 right-8 lg:left-64 lg:right-64"
+            placeholder="Type your message..."
+        />
+        <footer class="absolute bottom-0 w-full grid place-items-center py-2 bg-black text-yellow-200 h-[7vh]">
             <p class="italic">&copy; All right's <span class="line-through">reserved</span> unreserverd</p>
         </footer>
     </body>
