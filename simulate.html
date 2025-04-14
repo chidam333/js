@@ -165,7 +165,6 @@
                 }
             }
 
-            // UI Management
             class UIManager {
                 constructor(cartManager) {
                     this.cartManager = cartManager;
@@ -295,7 +294,6 @@
             const cartManager = new CartManager();
             const uiManager = new UIManager(cartManager);
 
-            // Expose necessary functions to window for event handlers
             window.addToCart = (productId) => {
                 const product = products.find(p => p.id === productId);
                 if (product) {
