@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>chat</title>
+        <link href="./output.css" rel="stylesheet" />
+        <style>
+            .fact-card {
+                padding: 1rem;
+                margin: 1rem;
+                background-color: white;
+                border-radius: 0.5rem;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            }
+        </style>
+    </head>
+    <body class="bg-stone-200 text-amber-800 w-[100vw] h-[100vh] relative overflow-hidden">
+        <header class="w-[100vw] text-center text-xl md:text-4xl h-[10vh] grid place-items-center">
+            <h1 class="font-mono my-auto">
+                chidam's
+                <span class="lame bg-yellow-200 px-2 italic stroke-indigo-50 text-black font-extrabold">chat</span>
+            </h1>
+        </header>
+        <main class="overflow-auto min-h-[83vh] lg:px-40 w-screen">
+            <div class="content overflow-scroll h-[80vh]">
+
+                <div class="view h-[10vh]"></div>
+            </div>
+        </main>
+        <footer class="absolute bottom-0 w-full grid place-items-center py-2 bg-black text-yellow-200 h-[7vh]">
+            <p class="italic">&copy; All right's <span class="line-through">reserved</span> unreserverd</p>
+        </footer>
+        <script>
+            const content = document.querySelector('.content');
+            const view = document.querySelector('.view');
+            let isLoading = false;
+            let isVisible = false;
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    isVisible = entry.isIntersecting;
+                    if (isVisible && !isLoading) {
+                        continuousFetch();
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+
+            observer.observe(view);
+
+            async function continuousFetch() {
+                while (isVisible) {
+                    await fetchCatFact();
+                    await new Promise(resolve => setTimeout(resolve, 500));
+                }
+            }
+
+            async function fetchCatFact() {
+                isLoading = true;
+                try {
+                    const response = await fetch('https://catfact.ninja/fact');
+                    const data = await response.json();
+                    
+                    const factCard = document.createElement('div');
+                    factCard.className = 'fact-card';
+                    factCard.textContent = data.fact;
+                    
+                    content.insertBefore(factCard, view);
+                } catch (error) {
+                    console.error('Error fetching cat fact:', error);
+                }
+                isLoading = false;
+            }
+        </script>
+    </body>
+</html>

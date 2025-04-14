@@ -1,0 +1,34 @@
+[
+    {
+        "id": 1,
+        "name": "Wireless Headphones",
+        "price": 99.99,
+        "category": "Electronics",
+        "description": "High-quality wireless headphones with noise cancellation",
+        "image": "static/jbl_tune_buds.webp"
+    },
+    {
+        "id": 2,
+        "name": "Smart Watch",
+        "price": 199.99,
+        "category": "Electronics",
+        "description": "Feature-rich smartwatch with health tracking",
+        "image": "static/smart_watch.webp"
+    },
+    {
+        "id": 3,
+        "name": "Running Shoes",
+        "price": 79.99,
+        "category": "Sports",
+        "description": "Comfortable running shoes for daily workouts",
+        "image": "static/shoes.webp"
+    },
+    {
+        "id": 4,
+        "name": "Backpack",
+        "price": 49.99,
+        "category": "Accessories",
+        "description": "Durable backpack with laptop compartment",
+        "image": "static/backpack.webp"
+    }
+]
